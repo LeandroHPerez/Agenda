@@ -114,4 +114,26 @@ public class ContatoDAO {
 
         database.close();
     }
+
+
+
+
+
+    public void favoritarContato(Contato c) {
+
+        database=dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        //values.put(SQLiteHelper.KEY_NAME, c.getNome());
+        //values.put(SQLiteHelper.KEY_FONE, c.getFone());
+        //values.put(SQLiteHelper.KEY_EMAIL, c.getEmail());
+        values.put(SQLiteHelper.KEY_FAVORITO, c.getFavorito());
+
+        if (c.getId()>0)
+            database.update(SQLiteHelper.DATABASE_TABLE, values, SQLiteHelper.KEY_ID + "="
+                    + c.getId(), null);
+
+
+        database.close();
+
+    }
 }

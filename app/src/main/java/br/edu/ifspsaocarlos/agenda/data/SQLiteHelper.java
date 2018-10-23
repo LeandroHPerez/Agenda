@@ -10,12 +10,20 @@ class SQLiteHelper extends SQLiteOpenHelper {
     static final String KEY_NAME = "nome";
     static final String KEY_FONE = "fone";
     static final String KEY_EMAIL = "email";
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_CREATE = "CREATE TABLE "+ DATABASE_TABLE +" (" +
+    static final String KEY_FAVORITO = "favorito";
+    private static final int DATABASE_VERSION = 2;
+
+    private static final String DATABASE_CREATE_V1 = "CREATE TABLE "+ DATABASE_TABLE +" (" +
             KEY_ID  +  " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             KEY_NAME + " TEXT NOT NULL, " +
             KEY_FONE + " TEXT, "  +
             KEY_EMAIL + " TEXT);";
+
+    private static final String DATABASE_CREATE_V2 = "CREATE TABLE "+ DATABASE_TABLE +" (" +
+            KEY_ID  +  " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            KEY_NAME + " TEXT NOT NULL, " +
+            KEY_FONE + " TEXT, "  +
+            KEY_FAVORITO + " INTEGER DEFAULT 0);"; //valor padrão igual a ZERO  = não favoritado
 
     SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,11 +31,29 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
+
+        database.execSQL(DATABASE_CREATE_V1);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int    newVersion) {
+
+        if(oldVersion < 2){
+            //código para atualizar da versão 1 para 2
+
+            String sql="Alter table contatos add column favorito integer";
+            database.execSQL(sql);
+
+        }
+
+        if(oldVersion < 3){
+            //código para atualizar da versão 2 para 3
+        }
+
+        if(oldVersion < 4){
+            //código para atualizar da versão 3 para 4
+        }
+
     }
 }
 

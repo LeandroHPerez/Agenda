@@ -8,6 +8,7 @@ public class Contato implements Serializable{
     private String nome;
     private String fone;
     private String email;
+    private int favorito; //item adicionado para marcar contato como favorito
 
     public Contato()
     {
@@ -36,6 +37,15 @@ public class Contato implements Serializable{
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    //Get e Set para o atributo favorito
+    public int getFavorito() {
+        return favorito;
+    }
+
+    public void setFavorito(int favorito) {
+        this.favorito = favorito;
     }
 }
 

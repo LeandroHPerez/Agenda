@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity{
         cDAO= new ContatoDAO(this);
 
         empty= (TextView) findViewById(R.id.empty_view);
-
+        //Coloca a Toolbar
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //RecyclerView e Adapter
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layout);
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity{
         recyclerView.setAdapter(adapter);
 
         setupRecyclerView();
-
+        //Float button
         fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +106,10 @@ public class MainActivity extends AppCompatActivity{
                 startActivityForResult(i, 1);
             }
         });
+
+//teste
+        setupFavoritarView();
+
 
         updateUI(null);
     }
@@ -263,6 +267,12 @@ public class MainActivity extends AppCompatActivity{
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
+
+    }
+
+
+
+    private void setupFavoritarView() {
 
     }
 
