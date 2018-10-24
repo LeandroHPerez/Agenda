@@ -27,7 +27,6 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
     private static ItemClickListener clickListener;
 
 
-
     public ContatoAdapter(List<Contato> contatos, Context context) {
         this.contatos = contatos;
         this.context = context;
@@ -63,6 +62,8 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
         //Recuperar a posição
         //holder.getPosition();
 
+
+        //****************** voltar aqui
         //Colocar listener de clique do botão favoritar
         ajustarCliqueBotaoFavoritar(holder.img_favoritar);
     }
@@ -76,6 +77,8 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
     public void setClickListener(ItemClickListener itemClickListener) {
         clickListener = itemClickListener;
     }
+
+
 
 
     public  class ContatoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -107,10 +110,6 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
         void onItemClick(int position);
     }
 
-//teste
-    public interface aaaaaaItemClickListener {
-        void onItemClick(int position);
-    }
 
 
 
@@ -129,9 +128,7 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
                 //holder.getPosition();
 
                 //Toast da linha clicada para teste
-                 Toast.makeText(v.getContext(),
-                        "Clicou no favoritar = " + holder.getPosition(),
-                        Toast.LENGTH_LONG).show();
+                 //Toast.makeText(v.getContext(),"Clicou no favoritar = " + holder.getPosition(), Toast.LENGTH_LONG).show();
 
 
 
@@ -151,6 +148,9 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
                 ContatoDAO cDAO;
                 cDAO = new ContatoDAO(context);
                 cDAO.favoritarContato(c);
+
+                //Notifica o adaptador que os dados mudaram
+                MainActivity.recyclerView.getAdapter().notifyDataSetChanged();
 
 
                 //cDAO.teste();

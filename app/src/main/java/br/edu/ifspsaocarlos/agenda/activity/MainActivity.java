@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,7 +45,9 @@ import br.edu.ifspsaocarlos.agenda.model.Contato;
 public class MainActivity extends AppCompatActivity{
 
     private ContatoDAO cDAO ;
-    private RecyclerView recyclerView;
+    //private RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
+
 
     private List<Contato> contatos = new ArrayList<>();
     private TextView empty;
