@@ -27,7 +27,7 @@ public class ContatoDAO {
 
         Cursor cursor;
 
-        String[] cols=new String[] {SQLiteHelper.KEY_ID,SQLiteHelper.KEY_NAME, SQLiteHelper.KEY_FONE, SQLiteHelper.KEY_EMAIL};
+        String[] cols=new String[] {SQLiteHelper.KEY_ID,SQLiteHelper.KEY_NAME, SQLiteHelper.KEY_FONE, SQLiteHelper.KEY_EMAIL, SQLiteHelper.KEY_FAVORITO}; //adição da coluna de favoritar -> v2
 
         cursor = database.query(SQLiteHelper.DATABASE_TABLE, cols, null , null,
                 null, null, SQLiteHelper.KEY_NAME);
@@ -39,6 +39,7 @@ public class ContatoDAO {
             contato.setNome(cursor.getString(1));
             contato.setFone(cursor.getString(2));
             contato.setEmail(cursor.getString(3));
+            contato.setFavorito(cursor.getInt(4)); //coluna favorito -> v2
             contatos.add(contato);
 
 
@@ -131,6 +132,17 @@ public class ContatoDAO {
         if (c.getId()>0)
             database.update(SQLiteHelper.DATABASE_TABLE, values, SQLiteHelper.KEY_ID + "="
                     + c.getId(), null);
+
+
+        database.close();
+
+    }
+
+
+    public void teste() {
+
+        database=dbHelper.getWritableDatabase();
+        database.execSQL("update contatos set KEY_FAVORITO = 1");
 
 
         database.close();

@@ -108,7 +108,7 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
     }
 
 //teste
-    public interface ItemClickListener {
+    public interface aaaaaaItemClickListener {
         void onItemClick(int position);
     }
 
@@ -151,6 +151,9 @@ public class ContatoAdapter extends RecyclerView.Adapter<ContatoAdapter.ContatoV
                 ContatoDAO cDAO;
                 cDAO = new ContatoDAO(context);
                 cDAO.favoritarContato(c);
+
+
+                //cDAO.teste();
 
             }
         });

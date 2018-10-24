@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +85,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Intent intent = getIntent();
         handleIntent(intent);
@@ -275,5 +283,33 @@ public class MainActivity extends AppCompatActivity{
     private void setupFavoritarView() {
 
     }
+
+
+
+
+
+    public static void backupDatabase() throws IOException {
+        //Open your local db as the input stream
+        String inFileName = "/data/data/br.edu.ifspsaocarlos.agenda/databases/agenda";
+        File dbFile = new File(inFileName);
+        FileInputStream fis = new FileInputStream(dbFile);
+
+        String outFileName = Environment.getExternalStorageDirectory()+"/MYDB";
+        //Open the empty db as the output stream
+        OutputStream output = new FileOutputStream(outFileName);
+        //transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = fis.read(buffer))>0){
+            output.write(buffer, 0, length);
+        }
+        //Close the streams
+        output.flush();
+        output.close();
+        fis.close();
+    }
+
+
+
 
 }
