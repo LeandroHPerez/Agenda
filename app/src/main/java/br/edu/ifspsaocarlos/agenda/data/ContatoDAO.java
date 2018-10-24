@@ -58,7 +58,7 @@ public class ContatoDAO {
 
         Cursor cursor;
 
-        String[] cols=new String[] {SQLiteHelper.KEY_ID,SQLiteHelper.KEY_NAME, SQLiteHelper.KEY_FONE, SQLiteHelper.KEY_EMAIL};
+        String[] cols=new String[] {SQLiteHelper.KEY_ID,SQLiteHelper.KEY_NAME, SQLiteHelper.KEY_FONE, SQLiteHelper.KEY_EMAIL, SQLiteHelper.KEY_FAVORITO}; //adição da coluna de favoritar -> v2};
         String where=SQLiteHelper.KEY_NAME + " like ?";
         String[] argWhere=new String[]{nome + "%"};
 
@@ -74,6 +74,7 @@ public class ContatoDAO {
             contato.setNome(cursor.getString(1));
             contato.setFone(cursor.getString(2));
             contato.setEmail(cursor.getString(3));
+            contato.setFavorito(cursor.getInt(4)); //coluna favorito -> v2
             contatos.add(contato);
 
 
@@ -147,5 +148,40 @@ public class ContatoDAO {
 
         database.close();
 
+    }
+
+
+    public  List<Contato> buscaContatosFavoritados()
+    {
+        database=dbHelper.getReadableDatabase();
+        List<Contato> contatos = new ArrayList<>();
+
+        Cursor cursor;
+
+        String[] cols=new String[] {SQLiteHelper.KEY_ID,SQLiteHelper.KEY_NAME, SQLiteHelper.KEY_FONE, SQLiteHelper.KEY_EMAIL, SQLiteHelper.KEY_FAVORITO}; //adição da coluna de favoritar -> v2};
+        String where=SQLiteHelper.KEY_FAVORITO+ " = ?";
+        String[] argWhere=new String[]{"1"};
+
+
+        cursor = database.query(SQLiteHelper.DATABASE_TABLE, cols, where , argWhere,
+                null, null, SQLiteHelper.KEY_NAME);
+
+
+        while (cursor.moveToNext())
+        {
+            Contato contato = new Contato();
+            contato.setId(cursor.getInt(0));
+            contato.setNome(cursor.getString(1));
+            contato.setFone(cursor.getString(2));
+            contato.setEmail(cursor.getString(3));
+            contato.setFavorito(cursor.getInt(4)); //coluna favorito -> v2
+            contatos.add(contato);
+
+
+        }
+        cursor.close();
+
+        database.close();
+        return contatos;
     }
 }

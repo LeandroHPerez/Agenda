@@ -21,6 +21,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,6 +58,11 @@ public class MainActivity extends AppCompatActivity{
 
     private FloatingActionButton fab;
 
+    private MenuItem itemFiltraFavoritos;
+    private MenuItem itemFiltraTodos;
+
+    private Boolean mostraMenuFiltraTodos = false;
+
     @Override
     public void onBackPressed() {
         if (!searchView.isIconified()) {
@@ -90,6 +96,8 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
 
+
+
         Intent intent = getIntent();
         handleIntent(intent);
 
@@ -118,8 +126,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-//teste
-        setupFavoritarView();
 
 
         updateUI(null);
@@ -153,6 +159,17 @@ public class MainActivity extends AppCompatActivity{
 
         searchView.setIconifiedByDefault(true);
 
+        //Ajuste da lógica do menu
+        if(mostraMenuFiltraTodos == true) {
+            menu.findItem(R.id.filtraTodos).setVisible(true);
+            menu.findItem(R.id.filtraFavoritos).setVisible(false);
+
+        }
+
+        if(mostraMenuFiltraTodos == false) {
+            menu.findItem(R.id.filtraTodos).setVisible(false);
+            menu.findItem(R.id.filtraFavoritos).setVisible(true);
+        }
 
         return true;
     }
@@ -283,36 +300,135 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-    private void setupFavoritarView() {
+    /*
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+            invalidateOptionsMenu();
 
+            itemFiltraFavoritos = menu.findItem(R.id.filtraFavoritos);
+            itemFiltraTodos = menu.findItem(R.id.filtraTodos);
+
+            //menu.findItem(R.id.option2).setVisible(false);
+            //menu.findItem(R.id.option4).setVisible(true);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
+    */
 
 
 
 
-    public static void backupDatabase() throws IOException {
-        //Open your local db as the input stream
-        String inFileName = "/data/data/br.edu.ifspsaocarlos.agenda/databases/agenda";
-        File dbFile = new File(inFileName);
-        FileInputStream fis = new FileInputStream(dbFile);
+    //Trata o clique no menu de favoritos
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.filtraFavoritos:
+                Toast.makeText(this,"Clicou no filtro por favoritos", Toast.LENGTH_LONG).show();
 
-        String outFileName = Environment.getExternalStorageDirectory()+"/MYDB";
-        //Open the empty db as the output stream
-        OutputStream output = new FileOutputStream(outFileName);
-        //transfer bytes from the inputfile to the outputfile
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = fis.read(buffer))>0){
-            output.write(buffer, 0, length);
+
+                //item.setVisible(false);
+
+                //MenuItem itemFiltraTodos = findViewById(R.id.filtraTodos);
+
+                //itemFiltraFavoritos.setEnabled(false);
+                //itemFiltraTodos.setEnabled(true);
+
+                mostraMenuFiltraTodos = true;
+                invalidateOptionsMenu(); // onCreateOptionsMenu(...) é chamado novamente
+                /*
+
+                updateUI_Operacoes("OPERACAO_BUSCA_FAVORITOS");
+                */
+                break;
+
+            case R.id.filtraTodos:
+                Toast.makeText(this,"Filtra Todos", Toast.LENGTH_LONG).show();
+
+                mostraMenuFiltraTodos = false;
+                invalidateOptionsMenu(); // onCreateOptionsMenu(...) é chamado novamente
+
+                //itemFiltraFavoritos.setEnabled(false);
+               // itemFiltraTodos.setEnabled(true);
+
+                //updateUI_Operacoes("OPERACAO_BUSCA_TODOS");
+                break;
+
         }
-        //Close the streams
-        output.flush();
-        output.close();
-        fis.close();
+        return true;
     }
 
 
+    //Criado para operações de busca específicas
+    private void updateUI_Operacoes(String operacao) {
+
+        if (operacao.toUpperCase().equals("OPERACAO_BUSCA_FAVORITOS")) {
 
 
+            contatos.clear();
+
+            contatos.addAll(cDAO.buscaContatosFavoritados());
+
+            /*
+            if (nomeContato == null) {
+                contatos.addAll(cDAO.buscaContatosFavoritados());
+                empty.setText(getResources().getString(R.string.lista_vazia));
+                fab.show();
+
+            } else {
+                contatos.addAll(cDAO.buscaContato(nomeContato));
+                empty.setText(getResources().getString(R.string.contato_nao_encontrado));
+                fab.hide();
+
+
+            }
+
+            */
+
+            recyclerView.getAdapter().notifyDataSetChanged();
+
+            if (recyclerView.getAdapter().getItemCount() == 0)
+                empty.setVisibility(View.VISIBLE);
+            else
+                empty.setVisibility(View.GONE);
+
+        }
+
+
+
+
+        if (operacao.toUpperCase().equals("OPERACAO_BUSCA_TODOS")) {
+
+
+            contatos.clear();
+
+            contatos.addAll(cDAO.buscaTodosContatos());
+
+            /*
+            if (nomeContato == null) {
+                contatos.addAll(cDAO.buscaContatosFavoritados());
+                empty.setText(getResources().getString(R.string.lista_vazia));
+                fab.show();
+
+            } else {
+                contatos.addAll(cDAO.buscaContato(nomeContato));
+                empty.setText(getResources().getString(R.string.contato_nao_encontrado));
+                fab.hide();
+
+
+            }
+
+            */
+
+            recyclerView.getAdapter().notifyDataSetChanged();
+
+            if (recyclerView.getAdapter().getItemCount() == 0)
+                empty.setVisibility(View.VISIBLE);
+            else
+                empty.setVisibility(View.GONE);
+
+        }
+
+
+    }
 }
