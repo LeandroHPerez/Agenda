@@ -178,8 +178,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        //Ajusta o bug do menus
-        invalidateOptionsMenu(); // onCreateOptionsMenu(...) é chamado novamente
+
 
 
         if (requestCode == 1)
@@ -191,11 +190,21 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        if (requestCode == 2) {
-            if (resultCode == RESULT_OK)
+        if (requestCode == 2) { //Request code para detalhar contato
+            if (resultCode == RESULT_OK) //salvou oua tualizou contato
                 showSnackBar(getResources().getString(R.string.contato_alterado));
-            if (resultCode == 3)
+
+                //Ajusta o bug do menus
+                mostraMenuFiltraTodos = false; //Corrige o bug do menu, quando volta tem que msotrar todos os contatos e o menu disponível é o dos favoritos
+                invalidateOptionsMenu(); // onCreateOptionsMenu(...) é chamado novamente
+
+            if (resultCode == 3) //apagou o contato
                 showSnackBar(getResources().getString(R.string.contato_apagado));
+
+            //Ajusta o bug do menus
+                mostraMenuFiltraTodos = false; //Corrige o bug do menu, quando volta tem que msotrar todos os contatos e o menu disponível é o dos favoritos
+                invalidateOptionsMenu(); // onCreateOptionsMenu(...) é chamado novamente
+
             updateUI(null);
         }
     }
@@ -235,6 +244,9 @@ public class MainActivity extends AppCompatActivity{
             empty.setVisibility(View.VISIBLE);
         else
             empty.setVisibility(View.GONE);
+
+
+        //invalidateOptionsMenu();
 
     }
 
