@@ -7,6 +7,7 @@ public class Contato implements Serializable{
     private long id;
     private String nome;
     private String fone;
+    private String fone2; //item adicionado para a v3
     private String email;
     private int favorito; //item adicionado para marcar contato como favorito
 
@@ -32,6 +33,16 @@ public class Contato implements Serializable{
     public void setFone(String fone) {
         this.fone = fone;
     }
+
+    //Get e Set para o atributo fone2 da v3
+    public String getFone2() {
+        return fone2;
+    }
+
+    public void setFone2(String fone2) {
+        this.fone2 = fone2;
+    }
+
     public String getEmail() {
         return email;
     }

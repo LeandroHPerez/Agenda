@@ -10,8 +10,9 @@ class SQLiteHelper extends SQLiteOpenHelper {
     static final String KEY_NAME = "nome";
     static final String KEY_FONE = "fone";
     static final String KEY_EMAIL = "email";
-    static final String KEY_FAVORITO = "favorito";
-    private static final int DATABASE_VERSION = 2;
+    static final String KEY_FAVORITO = "favorito";   //adição v2
+    static final String KEY_FONE_2 = "fone_2";      //adição v3
+    private static final int DATABASE_VERSION = 3;
 
     private static final String DATABASE_CREATE_V1 = "CREATE TABLE "+ DATABASE_TABLE +" (" +
             KEY_ID  +  " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -23,7 +24,14 @@ class SQLiteHelper extends SQLiteOpenHelper {
             KEY_ID  +  " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             KEY_NAME + " TEXT NOT NULL, " +
             KEY_FONE + " TEXT, "  +
-            KEY_FAVORITO + " INTEGER DEFAULT 0);"; //valor padrão igual a ZERO  = não favoritado
+            KEY_FAVORITO + " INTEGER DEFAULT 0);"; //valor padrão igual a ZERO  = não favoritado   //adição v2
+
+    private static final String DATABASE_CREATE_V3 = "CREATE TABLE "+ DATABASE_TABLE +" (" +
+            KEY_ID  +  " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            KEY_NAME + " TEXT NOT NULL, " +
+            KEY_FONE + " TEXT, "  +
+            KEY_FONE_2 + " TEXT, "  +               //adição v3
+            KEY_FAVORITO + " INTEGER DEFAULT 0);"; //valor padrão igual a ZERO  = não favoritado   //adição v2
 
     SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,13 +49,16 @@ class SQLiteHelper extends SQLiteOpenHelper {
         if(oldVersion < 2){
             //código para atualizar da versão 1 para 2
 
-            String sql="Alter table contatos add column favorito integer";
+            String sql="Alter table contatos add column favorito integer"; //não usei a key,  quis deixar assim para fins de estudo
             database.execSQL(sql);
 
         }
 
         if(oldVersion < 3){
             //código para atualizar da versão 2 para 3
+
+            String sql="Alter table contatos add column " + KEY_FONE_2 + " TEXT";
+            database.execSQL(sql);
         }
 
         if(oldVersion < 4){

@@ -58,9 +58,6 @@ public class MainActivity extends AppCompatActivity{
 
     private FloatingActionButton fab;
 
-    private MenuItem itemFiltraFavoritos;
-    private MenuItem itemFiltraTodos;
-
     private Boolean mostraMenuFiltraTodos = false;
 
     private static final String OPERACAO_BUSCA_TODOS = "OPERACAO_BUSCA_TODOS";
@@ -180,6 +177,11 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //Ajusta o bug do menus
+        invalidateOptionsMenu(); // onCreateOptionsMenu(...) é chamado novamente
+
+
         if (requestCode == 1)
             if (resultCode == RESULT_OK) {
                 showSnackBar(getResources().getString(R.string.contato_adicionado));
@@ -194,9 +196,6 @@ public class MainActivity extends AppCompatActivity{
                 showSnackBar(getResources().getString(R.string.contato_alterado));
             if (resultCode == 3)
                 showSnackBar(getResources().getString(R.string.contato_apagado));
-
-
-
             updateUI(null);
         }
     }
@@ -212,6 +211,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void updateUI(String nomeContato)
     {
+
 
         contatos.clear();
 

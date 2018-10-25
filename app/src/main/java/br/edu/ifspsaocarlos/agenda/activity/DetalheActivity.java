@@ -33,6 +33,8 @@ public class DetalheActivity extends AppCompatActivity {
             nameText.setText(c.getNome());
             EditText foneText = (EditText)findViewById(R.id.editTextFone);
             foneText.setText(c.getFone());
+            EditText foneText2 = (EditText)findViewById(R.id.editTextFoneDois); //fone2 - adicionado para a v3
+            foneText2.setText(c.getFone2());
             EditText emailText = (EditText)findViewById(R.id.editTextEmail);
             emailText.setText(c.getEmail());
             int pos =c.getNome().indexOf(" ");
@@ -82,7 +84,9 @@ public class DetalheActivity extends AppCompatActivity {
     {
         String name = ((EditText) findViewById(R.id.editTextNome)).getText().toString();
         String fone = ((EditText) findViewById(R.id.editTextFone)).getText().toString();
+        String fone2 = ((EditText) findViewById(R.id.editTextFoneDois)).getText().toString(); //fone2 - adicionado para a v3
         String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
+
 
         if (c==null)
             c = new Contato();
@@ -90,6 +94,7 @@ public class DetalheActivity extends AppCompatActivity {
 
         c.setNome(name);
         c.setFone(fone);
+        c.setFone2(fone2); //fone2 - adiconado para a v3
         c.setEmail(email);
 
         cDAO.salvaContato(c);
