@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity{
 
     private Boolean mostraMenuFiltraTodos = false;
 
+    private static final String OPERACAO_BUSCA_TODOS = "OPERACAO_BUSCA_TODOS";
+    private static final String OPERACAO_BUSCA_FAVORITOS = "OPERACAO_BUSCA_FAVORITOS";
+
     @Override
     public void onBackPressed() {
         if (!searchView.isIconified()) {
@@ -300,58 +303,28 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-    /*
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-            invalidateOptionsMenu();
-
-            itemFiltraFavoritos = menu.findItem(R.id.filtraFavoritos);
-            itemFiltraTodos = menu.findItem(R.id.filtraTodos);
-
-            //menu.findItem(R.id.option2).setVisible(false);
-            //menu.findItem(R.id.option4).setVisible(true);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    */
-
-
-
 
     //Trata o clique no menu de favoritos
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
         {
             case R.id.filtraFavoritos:
-                Toast.makeText(this,"Clicou no filtro por favoritos", Toast.LENGTH_LONG).show();
-
-
-                //item.setVisible(false);
-
-                //MenuItem itemFiltraTodos = findViewById(R.id.filtraTodos);
-
-                //itemFiltraFavoritos.setEnabled(false);
-                //itemFiltraTodos.setEnabled(true);
+                //Toast.makeText(this,"Clicou no filtro por favoritos", Toast.LENGTH_LONG).show();
 
                 mostraMenuFiltraTodos = true;
                 invalidateOptionsMenu(); // onCreateOptionsMenu(...) é chamado novamente
-                /*
 
-                updateUI_Operacoes("OPERACAO_BUSCA_FAVORITOS");
-                */
+                updateUI_Operacoes(OPERACAO_BUSCA_FAVORITOS);
+
                 break;
 
             case R.id.filtraTodos:
-                Toast.makeText(this,"Filtra Todos", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,"Filtra Todos", Toast.LENGTH_LONG).show();
 
                 mostraMenuFiltraTodos = false;
                 invalidateOptionsMenu(); // onCreateOptionsMenu(...) é chamado novamente
 
-                //itemFiltraFavoritos.setEnabled(false);
-               // itemFiltraTodos.setEnabled(true);
-
-                //updateUI_Operacoes("OPERACAO_BUSCA_TODOS");
+                updateUI_Operacoes(OPERACAO_BUSCA_TODOS);
                 break;
 
         }
@@ -362,7 +335,7 @@ public class MainActivity extends AppCompatActivity{
     //Criado para operações de busca específicas
     private void updateUI_Operacoes(String operacao) {
 
-        if (operacao.toUpperCase().equals("OPERACAO_BUSCA_FAVORITOS")) {
+        if (operacao.toUpperCase().equals(OPERACAO_BUSCA_FAVORITOS)) {
 
 
             contatos.clear();
@@ -397,7 +370,7 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        if (operacao.toUpperCase().equals("OPERACAO_BUSCA_TODOS")) {
+        if (operacao.toUpperCase().equals(OPERACAO_BUSCA_TODOS)) {
 
 
             contatos.clear();
