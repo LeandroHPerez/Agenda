@@ -64,11 +64,11 @@ public class MainActivity extends AppCompatActivity{
     private static final String OPERACAO_BUSCA_FAVORITOS = "OPERACAO_BUSCA_FAVORITOS";
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { //trata o botão voltar
         if (!searchView.isIconified()) {
 
-            searchView.onActionViewCollapsed();
-            updateUI(null);
+            searchView.onActionViewCollapsed(); //fecha a pesquisa anterior
+            updateUI(null); //pesquisa todos os contatos
         } else {
             super.onBackPressed();
         }
@@ -82,10 +82,13 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) { //Se for a action de pesquisa
             String query = intent.getStringExtra(SearchManager.QUERY);
             searchView.clearFocus();
-            updateUI(query);
+            //updateUI(query); //faz a pesquisa com os dados recuperados no campo de pesquisa - pesquisa original apenas por nome
+
+
+            updateUI_nome_email(query); //adição pesquisa por nome o e-mail - v4
 
         }
     }
@@ -217,7 +220,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-
+    //Pesquisa "original" apenas por nome
     private void updateUI(String nomeContato)
     {
 
@@ -249,6 +252,43 @@ public class MainActivity extends AppCompatActivity{
         //invalidateOptionsMenu();
 
     }
+
+
+
+    //Pesquisa nova por nome e email - adição v4
+    private void updateUI_nome_email(String nomeOuEmailContato)
+    {
+
+
+        contatos.clear();
+
+        if (nomeOuEmailContato==null) {
+            contatos.addAll(cDAO.buscaTodosContatos());
+            empty.setText(getResources().getString(R.string.lista_vazia));
+            fab.show();
+
+        }
+        else {
+            contatos.addAll(cDAO.buscaContato_nome_email(nomeOuEmailContato));
+            empty.setText(getResources().getString(R.string.contato_nao_encontrado));
+            fab.hide();
+
+
+        }
+
+        recyclerView.getAdapter().notifyDataSetChanged();
+
+        if (recyclerView.getAdapter().getItemCount()==0)
+            empty.setVisibility(View.VISIBLE);
+        else
+            empty.setVisibility(View.GONE);
+
+
+        //invalidateOptionsMenu();
+
+    }
+
+
 
     private void setupRecyclerView() {
 

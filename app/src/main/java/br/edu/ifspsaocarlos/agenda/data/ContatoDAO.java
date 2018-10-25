@@ -52,6 +52,7 @@ public class ContatoDAO {
         return contatos;
     }
 
+    //query "original" que busca por nome
     public  List<Contato> buscaContato(String nome)
     {
         database=dbHelper.getReadableDatabase();
@@ -86,6 +87,46 @@ public class ContatoDAO {
         database.close();
         return contatos;
     }
+
+
+
+    //query nova por nome e email - adição v4
+    public  List<Contato> buscaContato_nome_email(String nomeOuEmailContato)
+    {
+        database=dbHelper.getReadableDatabase();
+        List<Contato> contatos = new ArrayList<>();
+
+        Cursor cursor;
+
+        String[] cols=new String[] {SQLiteHelper.KEY_ID,SQLiteHelper.KEY_NAME, SQLiteHelper.KEY_FONE, SQLiteHelper.KEY_EMAIL, SQLiteHelper.KEY_FAVORITO, SQLiteHelper.KEY_FONE_2}; //adição da coluna de favoritar -> v2, KEY_FONE_2 -> v3
+        String where=SQLiteHelper.KEY_NAME + " like ? or " + SQLiteHelper.KEY_EMAIL + " like ?";
+        String[] argWhere=new String[]{nomeOuEmailContato + "%", nomeOuEmailContato + "%"};
+
+
+        cursor = database.query(SQLiteHelper.DATABASE_TABLE, cols, where , argWhere,
+                null, null, SQLiteHelper.KEY_NAME);
+
+
+        while (cursor.moveToNext())
+        {
+            Contato contato = new Contato();
+            contato.setId(cursor.getInt(0));
+            contato.setNome(cursor.getString(1));
+            contato.setFone(cursor.getString(2));
+            contato.setEmail(cursor.getString(3));
+            contato.setFavorito(cursor.getInt(4)); //coluna favorito -> v2
+            contato.setFone2(cursor.getString(5)); //coluna telefone_2 -> v3
+            contatos.add(contato);
+
+
+        }
+        cursor.close();
+
+        database.close();
+        return contatos;
+    }
+
+
 
     public void salvaContato(Contato c) {
 
