@@ -37,6 +37,10 @@ public class DetalheActivity extends AppCompatActivity {
             foneText2.setText(c.getFone2());
             EditText emailText = (EditText)findViewById(R.id.editTextEmail);
             emailText.setText(c.getEmail());
+            EditText diaAniversarioText = findViewById(R.id.editTextDiaAniversario); //dia - adicionado para a v4
+            diaAniversarioText.setText(c.getDiaAniversario());
+            EditText mesAniversarioText = findViewById(R.id.editTextMesAniversario); //mês - adicionado para a v4
+            mesAniversarioText.setText(c.getMesAniversario());
             int pos =c.getNome().indexOf(" ");
             if (pos==-1)
                 pos=c.getNome().length();
@@ -87,6 +91,9 @@ public class DetalheActivity extends AppCompatActivity {
         String fone2 = ((EditText) findViewById(R.id.editTextFoneDois)).getText().toString(); //fone2 - adicionado para a v3
         String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
 
+        String dia = ((EditText) findViewById(R.id.editTextDiaAniversario)).getText().toString(); //dia - adicionado para a v4
+        String mes = ((EditText) findViewById(R.id.editTextMesAniversario)).getText().toString(); //mês - adicionado para a v4
+
 
         if (c==null)
             c = new Contato();
@@ -96,6 +103,8 @@ public class DetalheActivity extends AppCompatActivity {
         c.setFone(fone);
         c.setFone2(fone2); //fone2 - adiconado para a v3
         c.setEmail(email);
+        c.setDiaAniversario(dia); //dia - adicionado para a v4
+        c.setMesAniversario(mes); //mês - adicionado para a v4
 
         cDAO.salvaContato(c);
         //c.setId(10);

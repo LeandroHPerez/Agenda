@@ -10,6 +10,8 @@ public class Contato implements Serializable{
     private String fone2; //item adicionado para a v3
     private String email;
     private int favorito; //item adicionado para marcar contato como favorito
+    private String diaAniversario; //item adicionado para a v4
+    private String mesAniversario; //item adicionado para a v4
 
     public Contato()
     {
@@ -57,6 +59,24 @@ public class Contato implements Serializable{
 
     public void setFavorito(int favorito) {
         this.favorito = favorito;
+    }
+
+    //Get e Set para o atributo dia e mês de aniversário da v4
+    public String getDiaAniversario() {
+        return diaAniversario;
+    }
+
+    public void setDiaAniversario(String diaAniversario) {
+        this.diaAniversario = diaAniversario;
+    }
+
+
+    public String getMesAniversario() {
+        return mesAniversario;
+    }
+
+    public void setMesAniversario(String mesAniversario) {
+        this.mesAniversario = mesAniversario;
     }
 }
 

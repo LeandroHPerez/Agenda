@@ -50,17 +50,20 @@
             android:id="@+id/editTextFone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="phone"
             android:hint="Telefone 1"></EditText>
 
         <EditText
             android:id="@+id/editTextFoneDois"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="phone"
             android:hint="Telefone 2"></EditText>
         <TextView
             android:id="@+id/textViewEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
             android:text="@string/email" >
         </TextView>
         <EditText
@@ -76,9 +79,18 @@
             android:text="Aniversário DD/MM" >
         </TextView>
         <EditText
-            android:id="@+id/editTextAniversario"
+            android:id="@+id/editTextDiaAniversario"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Dia" >
+        </EditText>
+        <EditText
+            android:id="@+id/editTextMesAniversario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Mês" >
         </EditText>
 
     </LinearLayout>
